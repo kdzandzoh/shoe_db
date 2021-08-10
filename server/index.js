@@ -118,8 +118,3 @@ app.get("/range", async (req, res) => {
 app.listen(5000, () => {
   console.log("Server has started on port 5000");
 });
-
-// Responsibilities include cleaning the ice after use, ensuring the arena is clean at all times, helping clients with any issues they experience, maintaining the Zamboni, and the upkeep of the ice.
-// https://www.linkedin.com/in/yashar-dzandzoh/
-
-// I'm searching for internship opportunities in order to further develop my skills. In school we can only learn so much theory, but having some practical experience will help me in my studies beacuse it will allow me to see how what we learn in school transfers to the real world. I love coding, and I love learning new things, and I believe an internship here will allow me to do both those things. Furthermore, so far most of the skills I've developed have been self taught through tutorials and projects, however I believe my skills will really begin to flourish with a mentor being able to look over me, or simply being able to work in a team.
