@@ -70,13 +70,13 @@ app.delete("/shoes/:id", async (req, res) => {
   }
 });
 
-// search shoe by name
-app.get("/search", async (req, res) => {
+app.get("/shoes/:term/:min-:max/:type.:order", async (req, res) => {
   try {
-    console.log(req.query);
-    const { term } = req.query;
+    let { term, min, max, type, order } = req.params;
+    term = term.toLowerCase();
+    order === "Ascending" ? (order = "ASC") : (order = "DESC");
     const shoes = await pool.query(
-      `SELECT * FROM shoes WHERE name LIKE '%' || $1 || '%'`,
+      `SELECT * FROM shoes WHERE LOWER(name) LIKE '%' || $1 || '%' AND price BETWEEN ${min} AND ${max} ORDER BY ${type} ${order}`,
       [term]
     );
     res.json(shoes.rows);
@@ -85,29 +85,12 @@ app.get("/search", async (req, res) => {
   }
 });
 
-// order shoe by parameters
-app.get("/order", async (req, res) => {
+app.get("/search/:min-:max/:type.:order", async (req, res) => {
   try {
-    let { term, type, order } = req.query;
-    type = type.toLowerCase();
+    let { min, max, type, order } = req.params;
     order === "Ascending" ? (order = "ASC") : (order = "DESC");
-
-    const query = `SELECT * FROM shoes WHERE name LIKE '${term}' ORDER BY ${type} ${order}`;
-
-    const shoes = await pool.query(query);
-    res.json(shoes.rows);
-  } catch (err) {
-    console.error(err.message);
-  }
-});
-
-// get shoes between price range
-app.get("/range", async (req, res) => {
-  try {
-    let { min, max } = req.query;
-    console.log(req.query);
     const shoes = await pool.query(
-      `SELECT * FROM shoes WHERE price BETWEEN ${min} AND ${max}`
+      `SELECT * FROM shoes WHERE price BETWEEN ${min} AND ${max} ORDER BY ${type} ${order}`
     );
     res.json(shoes.rows);
   } catch (err) {
